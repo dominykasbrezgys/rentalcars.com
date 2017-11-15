@@ -61,7 +61,9 @@ public class CarsParser {
 
         Task1 t1 = new Task1(vehicles);
 
-        System.out.println(t1);
+        Task2 t2 = new Task2(vehicles);
+
+        System.out.println(t2);
     }
 
 }
