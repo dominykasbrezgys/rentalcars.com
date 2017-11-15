@@ -18,7 +18,7 @@ public class CarsParser {
 
         List<JsonObject> jsonAsArrayList = new ArrayList<>();
         BufferedReader reader = null;
-        StringBuffer bufferStr = new StringBuffer();
+        StringBuilder vehiclesStr = new StringBuilder();
 
         //1. Retrieve JSON String from specified url using BufferReader
         //TODO: see if can be done with no stream mode & TIDY UP comments
@@ -31,14 +31,14 @@ public class CarsParser {
             char[] chars = new char[1024]; //each chunk (1024 chars each) of stream is copied to this buffer
 
             while ((read = reader.read(chars)) != -1) // reader.read(arrayToStoreChars) returns how many chars have been read if -1,
-                bufferStr.append(chars, 0, read);				// no chars to read
+                vehiclesStr.append(chars, 0, read);				// no chars to read
 
         } finally {
             if (reader != null)
                 reader.close();
         }
         //2. Work down the hierarchy to get VehicleList JsonObject
-        JsonElement jelement = new JsonParser().parse(bufferStr.toString());
+        JsonElement jelement = new JsonParser().parse(vehiclesStr.toString());
         JsonObject rootObject = jelement.getAsJsonObject();
         JsonObject searchObject = rootObject.getAsJsonObject("Search");
         JsonArray vehiclesJSON = searchObject.getAsJsonArray("VehicleList");
@@ -57,11 +57,11 @@ public class CarsParser {
     public static void main(String[] args) throws Exception {
 
         CarsParser cp = new CarsParser();
-
         ArrayList<JsonObject> vehicles = cp.getVehiclesAsArrayList(JSON_URL);
 
-        System.out.println(vehicles);
+        Task1 t1 = new Task1(vehicles);
 
+        System.out.println(t1);
     }
 
 }
