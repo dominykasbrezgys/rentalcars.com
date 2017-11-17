@@ -1,6 +1,11 @@
 # rentalcars.com
 Exercise for rentalcars.com grad scheme
 
+IntelliJ IDEA was used to develop this project.
+External libraries used:
+gson
+jersey
+
 Please inspect source code under src/
 
 A function getVehiclesAsArrayListFromFile() in CarsParser.java is provided for testing with json files under local directory.
