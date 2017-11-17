@@ -1,6 +1,5 @@
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.oracle.javafx.jmx.json.JSONException;
+import com.google.gson.JsonIOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,7 +29,7 @@ public class Task1 {
                     valA = a.get(KEY_NAME).getAsString();
                     valB = b.get(KEY_NAME).getAsString();
                 }
-                catch (JSONException e) {
+                catch (JsonIOException e) {
                     System.err.println("Sorting by price went wrong: " + e.getMessage());
                 }
 

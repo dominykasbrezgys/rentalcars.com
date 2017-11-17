@@ -1,5 +1,5 @@
 import com.google.gson.JsonObject;
-import com.oracle.javafx.jmx.json.JSONException;
+import com.google.gson.JsonIOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,7 +38,7 @@ public class Task4 {
                         valA=temp;
                     }
                 }
-                catch (JSONException e) {
+                catch (JsonIOException e) {
                     System.err.println("Sorting by Sum of Scores went wrong: " + e.getMessage());
                 }
                 return -valA.compareTo(valB);

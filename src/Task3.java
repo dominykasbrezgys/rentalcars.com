@@ -1,5 +1,5 @@
 import com.google.gson.JsonObject;
-import com.oracle.javafx.jmx.json.JSONException;
+import com.google.gson.JsonIOException;
 import java.util.*;
 
 public class Task3 {
@@ -50,7 +50,7 @@ public class Task3 {
                     valA = a.get(KEY_NAME).getAsString();
                     valB = b.get(KEY_NAME).getAsString();
                 }
-                catch (JSONException e) {
+                catch (JsonIOException e) {
                     System.err.println("Sorting by rating went wrong: " + e.getMessage());
                 }
                 return -valA.compareTo(valB);
