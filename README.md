@@ -11,7 +11,7 @@ for deploying a REST server on http://localhost:9999/CarsParserREST/
 Instructions:
 1. Checkout CarsParser.jar to your local directory
 2. Locate to directory of CarsParser.jar via terminal
-3. Use command: java -jar CarsParser.java
+3. Use command: java -jar CarsParser.jar
 4. Wait until you see message 'Press Enter to stop server.'
 
 Outputs for each task for parsing http://www.rentalcars.com/js/vehicles.json can now be accesed via 
