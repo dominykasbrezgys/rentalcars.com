@@ -15,10 +15,7 @@ public class Task1 {
         vehicles = vehiclesArrayList;
     }
 
-
-    private void sort(){
-
-        JsonArray sortedJsonArray = new JsonArray();
+    private void sortByPrice(){
 
         Collections.sort( vehicles, new Comparator<JsonObject>() {
 
@@ -34,12 +31,10 @@ public class Task1 {
                     valB = b.get(KEY_NAME).getAsString();
                 }
                 catch (JSONException e) {
-                    //do something
+                    System.err.println("Sorting by price went wrong: " + e.getMessage());
                 }
 
                 return valA.compareTo(valB);
-                //if you want to change the sort order, simply use the following:
-                //return -valA.compareTo(valB);
             }
         });
 
@@ -57,8 +52,8 @@ public class Task1 {
         return output.toString();
     }
 
-    public String toString() {
-        sort();
+    public String getOutput() {
+        sortByPrice();
         return buildOutputString();
     }
 }
