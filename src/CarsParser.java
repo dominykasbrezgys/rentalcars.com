@@ -3,19 +3,24 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.*;
 
-
+@Path("/getTaskOutput")
 public class CarsParser {
 
-    static final String JSON_URL = "http://www.rentalcars.com/js/vehicles.json";//TODO: change to input parameter
+    private String JSON_URL = "http://www.rentalcars.com/js/vehicles.json";
 
-
-    private ArrayList<JsonObject> getVehiclesAsArrayList(String urlString)throws Exception {
+    private ArrayList<JsonObject> getVehiclesAsArrayList()throws Exception {
 
         List<JsonObject> jsonAsArrayList = new ArrayList<>();
         BufferedReader reader = null;
@@ -24,7 +29,7 @@ public class CarsParser {
         //1. Retrieve JSON String from specified url using BufferReader
         //TODO: see if can be done with no stream mode & TIDY UP comments
         try {
-            URL url = new URL(urlString);
+            URL url = new URL(JSON_URL);
             reader = new BufferedReader(new InputStreamReader(url.openStream()));//Reads text from a character-input stream
             // An InputStreamReader is a bridge from byte streams to character streams
 
@@ -91,18 +96,28 @@ public class CarsParser {
 
     }
 
-    public static void main(String[] args) throws Exception {
+    @GET
+    @Path("/{TaskNumber}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getTaskOutput(@PathParam("TaskNumber") String Task) {
+        ArrayList<JsonObject> vehicles = null;
+        try {
+            vehicles = getVehiclesAsArrayList();
+        } catch (Exception e) {
+            return "Couldn't access JSON file. Check URL.";
+        }
 
-        CarsParser cp = new CarsParser();
-        //ArrayList<JsonObject> vehicles = cp.getVehiclesAsArrayList("https://www.rentalcars.com/js/vehicles.json");
-        ArrayList<JsonObject> vehicles = cp.getFromFile();
-
-        Task3 t = new Task3(vehicles);
-
-        System.out.println(t.getOutput());
-
-
-
+        switch(Task){
+            case "Task1":
+                return new Task1(vehicles).getOutput().toString();
+            case "Task2":
+                return new Task2(vehicles).getOutput().toString();
+            case "Task3":
+                return new Task3(vehicles).getOutput().toString();
+            case "Task4":
+                return new Task4(vehicles).getOutput().toString();
+            default:
+                return "Task was not found";
+        }
     }
-
 }
