@@ -10,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.*;
@@ -50,6 +51,38 @@ public class CarsParser {
         for (int i = 0; i < vehiclesJSON.size(); i++) {
             jsonAsArrayList.add(vehiclesJSON.get(i).getAsJsonObject());
         }
+        return (ArrayList<JsonObject>) jsonAsArrayList;
+    }
+
+    private ArrayList<JsonObject> getVehiclesAsArrayListFromFile()throws Exception {
+        List<JsonObject> jsonAsArrayList = new ArrayList<>();
+        BufferedReader reader = null;
+        StringBuilder vehiclesStr = new StringBuilder();
+
+        try {
+            reader = new BufferedReader(new FileReader("src/testData.json"));
+
+            int read;
+            char[] chars = new char[1024];
+
+            while ((read = reader.read(chars)) != -1)
+                vehiclesStr.append(chars, 0, read);
+
+        } finally {
+            if (reader != null)
+                reader.close();
+        }
+        //2. Work down the hierarchy to get VehicleList JsonObject
+        JsonElement jelement = new JsonParser().parse(vehiclesStr.toString());
+        JsonObject rootObject = jelement.getAsJsonObject();
+        JsonObject searchObject = rootObject.getAsJsonObject("Search");
+        JsonArray vehiclesJSON = searchObject.getAsJsonArray("VehicleList");
+
+        //3. Convert to ArrayList
+        for (int i = 0; i < vehiclesJSON.size(); i++) {
+            jsonAsArrayList.add(vehiclesJSON.get(i).getAsJsonObject());
+        }
+
         return (ArrayList<JsonObject>) jsonAsArrayList;
     }
 
